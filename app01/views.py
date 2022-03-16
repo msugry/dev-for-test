@@ -210,9 +210,9 @@ class PrettyModeForm(forms.ModelForm):
     # 验证方法二
     def clean_mobile(self):
         txt_mobile = self.cleaned_data["mobile"]
-        if len(txt_mobile) != 11:
-            # 验证不通过
-            raise ValidationError("格式错误")
+        exists = models.PrettyNum.objects.filter(mobile=txt_mobile).exists()
+        if exists:
+            raise ValidationError("手机号已存在")
         # 验证通过,用户输入的值返回
         return txt_mobile
 
@@ -235,6 +235,7 @@ class PrettyEditModeForm(forms.ModelForm):
         label="手机号",
         validators=[RegexValidator(r'^1[3-9]\d{9}$', '手机号格式错误')],
     )
+
     class Meta:
         model = models.PrettyNum
         fields = ['mobile', 'price', 'level', 'status']  # 自定义字段
@@ -244,6 +245,19 @@ class PrettyEditModeForm(forms.ModelForm):
         for name, field in self.fields.items():
             field.widget.attrs = {"class": "form-control", "placeholder": field.label}
 
+    # 验证：方式2
+    def clean_mobile(self):
+        # 当前编辑的那一行的ID
+        # print(self.instance.pk)
+
+        txt_mobile = self.cleaned_data["mobile"]
+        exists = models.PrettyNum.objects.exclude(id = self.instance.pk).filter(mobile=txt_mobile).exists()
+        if exists:
+            raise ValidationError("手机号已存在")
+
+        #验证通过，用户输入的值返回
+        return txt_mobile
+
 
 def pretty_edit(request, nid):
     """编辑靓号页面"""
@@ -252,6 +266,7 @@ def pretty_edit(request, nid):
     if request.method == "GET":
         form = PrettyEditModeForm(instance=row_object)
         return render(request, 'pretty_edit.html', {"form": form})
+
     form = PrettyEditModeForm(data=request.POST,instance=row_object)
     if form.is_valid():
         form.save()
