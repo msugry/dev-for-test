@@ -45,7 +45,6 @@ class UserInfo(models.Model):
         (2, "女")
     )
     gender = models.SmallIntegerField(verbose_name="性别", choices=gender_choices)
-
     # level_choices = (
     #     (1, "高级"),
     #     (2, "初级")

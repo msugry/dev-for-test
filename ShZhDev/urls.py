@@ -18,6 +18,7 @@ from django.urls import path
 from app01 import views
 
 urlpatterns = [
+    #部门管理
     # path('admin/', admin.site.urls),
     path('depart/list/', views.depart_list),
     path('depart/add/', views.depart_add),
@@ -26,9 +27,9 @@ urlpatterns = [
     # http://127.0.0.1:8000/depart/4/edit/
     path('depart/<int:nid>/edit/', views.depart_edit),
 
+    #用户管理
     path('user/list/',views.user_list),
     path('user/add/',views.user_add),
-
     path('user/model/form/add/',views.user_model_form_add),
     path('user/<int:nid>/edit/',views.user_edit),
     path('user/<int:nid>/del/', views.user_delete),

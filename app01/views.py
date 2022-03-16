@@ -1,6 +1,8 @@
 from django.core.validators import RegexValidator
 from django.shortcuts import render, redirect
 
+from django.core.exceptions import ValidationError
+
 # Create your views here.
 from app01 import models
 
@@ -184,7 +186,6 @@ def pretty_list(request):
     return render(request, 'pretty_list.html', {'queryset': queryset})
 
 
-from django.core.exceptions import ValidationError
 
 
 class PrettyModeForm(forms.ModelForm):
