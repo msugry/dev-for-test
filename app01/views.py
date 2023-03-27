@@ -2,6 +2,7 @@ from django.core.validators import RegexValidator
 from django.shortcuts import render, redirect
 
 from django.core.exceptions import ValidationError
+from django import forms
 
 # Create your views here.
 from app01 import models
@@ -106,7 +107,7 @@ def user_add(request):
 
 
 ######################## ModelForm 示例 ##########################
-from django import forms
+
 
 
 class UserModelForm(forms.ModelForm):
@@ -272,3 +273,6 @@ def pretty_edit(request, nid):
         form.save()
         return redirect('/pretty/list/')
     return render(request, 'pretty_edit.html', {"form": form})
+
+def test():
+    print("git operate")
