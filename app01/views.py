@@ -275,4 +275,4 @@ def pretty_edit(request, nid):
     return render(request, 'pretty_edit.html', {"form": form})
 
 def test():
-    print("git operate")
+    print("git test")
