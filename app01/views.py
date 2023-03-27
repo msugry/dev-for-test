@@ -276,3 +276,4 @@ def pretty_edit(request, nid):
 
 def test():
     print("test for git operate")
+
